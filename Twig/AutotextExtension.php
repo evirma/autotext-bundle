@@ -15,7 +15,7 @@ class AutotextExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            'autotext' => new TwigFilter('autotext', array(&$this, 'autotext'), array('is_safe' => array('html'))),
+            'autotext' => new TwigFilter('autotext', [$this, 'autotext'], array('is_safe' => array('html'))),
         ];
     }
 
@@ -25,7 +25,7 @@ class AutotextExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('autotext', array($this, 'autotext'), ['is_safe' => ['all']]),
+            new TwigFunction('autotext', [$this, 'autotext'], ['is_safe' => ['all']]),
         ];
     }
 

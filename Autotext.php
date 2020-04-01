@@ -2,8 +2,8 @@
 
 namespace Evirma\Bundle\AutotextBundle;
 
-use TextGenerator\Part;
-use TextGenerator\TextGenerator;
+use Evirma\Bundle\AutotextBundle\TextGenerator\Part;
+use Evirma\Bundle\AutotextBundle\TextGenerator\TextGenerator;
 
 class Autotext
 {

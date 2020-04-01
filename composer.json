@@ -14,7 +14,6 @@
     "require": {
         "php": ">=7.0.0",
         "twig/twig": "^2.0 || ^3.0",
-        "meniam/text_generator": "~1.0",
         "symfony/framework-bundle": "^3.0 || ^4.4 || ^5.0",
         "symfony/twig-bundle":      "^3.0 || ^4.4 || ^5.0"
     },
