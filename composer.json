@@ -1,0 +1,27 @@
+{
+    "name": "evirma/autotext-bundle",
+    "type": "symfony-bundle",
+    "description":  "Seo text generator library for Symfony 5",
+    "keywords": ["app", "web", "seo", "text", "permutation"],
+    "homepage": "https://github.com/evirma/autotext-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eugene Myazin",
+            "email": "meniam@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "twig/twig": "^2.0 || ^3.0",
+        "meniam/text_generator": "~1.0",
+        "symfony/framework-bundle": "^3.0 || ^4.4 || ^5.0",
+        "symfony/twig-bundle":      "^3.0 || ^4.4 || ^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": { "Evirma\\Bundle\\AutotextBundle\\": "" }
+    }
+}

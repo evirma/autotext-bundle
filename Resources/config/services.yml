@@ -1,0 +1,12 @@
+parameters:
+    autotext.service.class:   Evirma\Bundle\AutotextBundle\Autotext
+    autotext.twig.extension.class:   Evirma\Bundle\AutotextBundle\Twig\AutotextExtension
+
+services:
+    Evirma\Bundle\AutotextBundle\Autotext:
+        class:     "%autotext.service.class%"
+    twig.autotext:
+        class:     "%autotext.twig.extension.class%"
+        public:    false
+        tags:
+            - { name: twig.extension }
