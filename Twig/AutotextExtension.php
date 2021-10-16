@@ -12,7 +12,7 @@ class AutotextExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             'autotext' => new TwigFilter('autotext', [$this, 'autotext'], array('is_safe' => array('html'))),
@@ -22,7 +22,7 @@ class AutotextExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('autotext', [$this, 'autotext'], ['is_safe' => ['all']]),
@@ -43,7 +43,7 @@ class AutotextExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [new AutotextTokenParser()];
     }
