@@ -14,8 +14,8 @@
     "require": {
         "php": "^7.0 || ^8.0",
         "twig/twig": "^2.0 || ^3.0",
-        "symfony/framework-bundle": "^3.0 || ^4.4 || ^5.0",
-        "symfony/twig-bundle":      "^3.0 || ^4.4 || ^5.0"
+        "symfony/framework-bundle": "^3.0 || ^4.4 || ^5.0 || 5.4.x-dev",
+        "symfony/twig-bundle":      "^3.0 || ^4.4 || ^5.0 || 5.4.x-dev"
     },
     "autoload": {
         "psr-4": { "Evirma\\Bundle\\AutotextBundle\\": "" }
