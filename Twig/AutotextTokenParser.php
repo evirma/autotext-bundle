@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\Twig;
 
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 use Twig\Node\Expression\ArrayExpression;
 
 class AutotextTokenParser extends AbstractTokenParser
 {
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
         $parser = $this->parser;
@@ -36,12 +39,12 @@ class AutotextTokenParser extends AbstractTokenParser
         return new AutotextNode($body, $id, $vars, $lineno, $this->getTag());
     }
 
-    public function decideMarkdownEnd(Token $token)
+    public function decideMarkdownEnd(Token $token): bool
     {
         return ($token->test('autotextend') || $token->test('endautotext'));
     }
 
-    public function getTag()
+    public function getTag(): string
     {
         return 'autotext';
     }

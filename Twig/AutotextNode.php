@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\Twig;
 
 use Twig\Compiler;
@@ -24,7 +26,7 @@ class AutotextNode extends Node
         parent::__construct($nodes, [], $line, $tag);
     }
 
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

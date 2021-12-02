@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpUnused */
+
+declare(strict_types=1);
 
 namespace Evirma\Bundle\AutotextBundle\Permutation;
 
@@ -10,25 +12,10 @@ namespace Evirma\Bundle\AutotextBundle\Permutation;
  */
 class Permutation
 {
-    /**
-     * @var integer
-     */
-    private $elements;
-
-    /**
-     * @var array
-     */
-    private $current;
-
-    /**
-     * @var array
-     */
-    private $first;
-
-    /**
-     * @var array
-     */
-    private $sequenceArray;
+    private int $elements;
+    private array $current;
+    private array $first;
+    private array $sequenceArray;
 
     /**
      * Permutation constructor.
@@ -51,12 +38,7 @@ class Permutation
         $this->sequenceArray[0] = $this->first;
     }
 
-    /**
-     * @param       $items
-     * @param array $perms
-     * @return array
-     */
-    function _permuteArray($items, $perms = array())
+    function _permuteArray(array $items, array $perms = []): array
     {
         $result = array();
 
@@ -64,14 +46,14 @@ class Permutation
             $newitems = $items;
             $newperms = $perms;
 
-            list($foo) = array_splice($newitems, $i, 1);
+            [$foo] = array_splice($newitems, $i, 1);
             array_unshift($newperms, $foo);
 
             if (empty($newitems)) {
                 $result[] = $newperms;
             } else {
                 $innerResult = $this->_permuteArray($newitems, $newperms);
-                foreach ($innerResult as &$r) {
+                foreach ($innerResult as $r) {
                     $result[] = $r;
                 }
             }
@@ -80,23 +62,15 @@ class Permutation
         return $result;
     }
 
-    /**
-     *
-     * @return array
-     */
-    public function permuteArray()
+    public function permuteArray(): array
     {
         return $this->_permuteArray($this->first);
     }
 
     /**
      * Get Next Sequence in order
-     *
-     * @param array $currentSequence
-     *
-     * @return array
      */
-    public function nextSequence($currentSequence = null)
+    public function nextSequence(array $currentSequence = []): array
     {
         $sequenceLength = count($currentSequence);
 
@@ -144,10 +118,7 @@ class Permutation
         return $nextSequence;
     }
 
-    /**
-     * @return array
-     */
-    public function next()
+    public function next(): array
     {
         $this->current = $this->nextSequence($this->current);
         return $this->current;
@@ -155,25 +126,16 @@ class Permutation
 
     /**
      * Get by position
-     *
-     * @param $position
-     *
-     * @return array
      */
-    public function getByPos($position)
+    public function getByPos(int $position): array
     {
-        return self::permutationByPos($this->current(), (int)$position);
+        return self::permutationByPos($this->current(), $position);
     }
 
     /**
      * Get by position
-     *
-     * @param $array
-     * @param $num
-     *
-     * @return array
      */
-    public static function permutationByPos($array, $num)
+    public static function permutationByPos(array $array, int $num): array
     {
         $num = abs($num)+1;
         $n = count($array);
@@ -201,36 +163,26 @@ class Permutation
 
             $res[$i-1]=$j-1;
             $used[$j] = true;
-            $num = intval(($num - 1) % $factorial) + 1;
+            $num = ($num - 1) % $factorial + 1;
         }
 
         return $res;
     }
 
-    /**
-     * @return array
-     */
-    public function current()
+    public function current(): array
     {
         return $this->current;
     }
 
-    /**
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         return $this->elements;
     }
 
     /**
      * Factorial
-     *
-     * @param $x
-     *
-     * @return int
      */
-    private static function factorial($x)
+    private static function factorial(int $x): int
     {
         $result = ($x === 0) ? 1 : $x * self::factorial($x - 1);
         if ($result >= PHP_INT_MAX) {

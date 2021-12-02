@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle;
 
 use Evirma\Bundle\AutotextBundle\TextGenerator\Part;
@@ -7,13 +9,7 @@ use Evirma\Bundle\AutotextBundle\TextGenerator\TextGenerator;
 
 class Autotext
 {
-    /**
-     * @param       $text
-     * @param null  $seed
-     * @param array $vars
-     * @return string
-     */
-    public static function autotext($text, $seed = null, $vars = [])
+    public static function autotext(string $text, string $seed = null, array $vars = []): string
     {
         $textGeneratorOptions = [Part::OPTION_GENERATE_RANDOM => $seed];
         $textGenerator = TextGenerator::factory($text, $textGeneratorOptions);
@@ -22,12 +18,7 @@ class Autotext
         return self::replaceVars($text, $vars);
     }
 
-    /**
-     * @param $text
-     * @param $vars
-     * @return mixed|string
-     */
-    public static function replaceVars($text, $vars = null)
+    public static function replaceVars(string $text, array $vars = []): string
     {
         if (empty($text) || empty($vars) || (strpos($text, '%') === false)) {
             return trim($text);

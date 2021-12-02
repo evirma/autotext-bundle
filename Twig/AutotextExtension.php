@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\Twig;
 
 use Evirma\Bundle\AutotextBundle\Autotext;
@@ -9,9 +11,6 @@ use Twig\TwigFunction;
 
 class AutotextExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -19,9 +18,6 @@ class AutotextExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions(): array
     {
         return [
@@ -29,20 +25,11 @@ class AutotextExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param       $text
-     * @param null  $id
-     * @param array $vars
-     * @return string
-     */
-    public function autotext($text, $id = null, $vars = [])
+    public function autotext(string $text, string $id = null, array $vars = []): string
     {
         return Autotext::autotext($text, $id, $vars);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTokenParsers(): array
     {
         return [new AutotextTokenParser()];
