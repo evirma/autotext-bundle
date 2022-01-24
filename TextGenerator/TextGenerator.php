@@ -27,12 +27,12 @@ class TextGenerator
             return new Part($template, $options);
         }
 
-        if (mb_strpos($template, '{', null, 'UTF-8') === 0) {
+        if (mb_strpos($template, '{', 0, 'UTF-8') === 0) {
             $template = mb_substr($template, 1, -1, 'UTF-8');
             return new XorPart($template, $options);
         }
 
-        if (mb_strpos($template, '[', null, 'UTF-8') === 0) {
+        if (mb_strpos($template, '[', 0, 'UTF-8') === 0) {
             $template = mb_substr($template, 1, -1, 'UTF-8');
             return new OrPart($template, $options);
         }
