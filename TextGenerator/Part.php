@@ -184,6 +184,10 @@ class Part
      */
     public function getRandomTemplate($seed = null)
     {
+        if (is_null($this->template)) {
+            return '';
+        }
+
         if (is_string($this->template)) {
             return $this->template;
         }
