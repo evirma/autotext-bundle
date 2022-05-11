@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\TextGenerator;
 
-use Countable;
+use JetBrains\PhpStorm\ArrayShape;
 
 class Part
 {
@@ -16,17 +18,16 @@ class Part
     /**
      * Шаблон для генерации
      * @see TextGenerator_Part::parseTemplate()
-     * @var string
      */
-    protected $template;
+    protected mixed $template = null;
 
     /**
      * Массив замен из управляющих конструкций (перестановок и переборов)
      * @var array|Part[]
      */
-    protected $replacementArray;
+    protected array $replacementArray;
 
-    private $options = [
+    private array $options = [
         self::OPTION_STRIP_WHITE_SPACE => true,
         self::OPTION_FILTER_EMPTY_VALUES => true,
         self::OPTION_REMOVE_DUPLICATES => true,
@@ -38,7 +39,7 @@ class Part
      * @param string $template - шаблон, по которому будет генерироваться текст
      * @param array  $options
      */
-    public function __construct($template, array $options = array())
+    public function __construct(string $template, array $options = array())
     {
         $this->setOptions($options);
         $template               = $this->parseTemplate($template);
@@ -59,11 +60,12 @@ class Part
      *
      * @return array
      */
-    protected function parseTemplate($template)
+    #[ArrayShape(['template' => "mixed", 'replacement_array' => "array"])]
+    protected function parseTemplate(string $template): array
     {
         $replacementArray = array();
 
-        $template = preg_replace_callback('#[\[{]((?:(?:[^\[{\]}]+)|(?R))*)[}\]]#', function ($match) use (&$replacementArray) {
+        $template = preg_replace_callback('#[\[{]((?:[^\[{\]}]+|(?R))*)[}\]]#', function ($match) use (&$replacementArray) {
             $key                    = '%0000' . count($replacementArray) . '%';
             $replacementArray[$key] = TextGenerator::factory($match[0], $this->getOptions());
             return $key;
@@ -79,7 +81,7 @@ class Part
      * Сгенерировать текст по текущему шаблону
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         $template         = $this->getCurrentTemplate();
         $replacementArray = $this->getReplacementArray();
@@ -108,7 +110,7 @@ class Part
      * @param null $seed
      * @return mixed
      */
-    public function generateRandom($seed = null)
+    public function generateRandom($seed = null): mixed
     {
         $template         = $this->getRandomTemplate($seed);
         $replacementArray = $this->getReplacementArray();
@@ -133,14 +135,11 @@ class Part
         return $template;
     }
 
-    /**
-     * @return int
-     */
-    public function getReplacementCount()
+    public function getReplacementCount(): int
     {
         $repeats = 1;
         if (!empty($this->replacementArray)) {
-            foreach ($this->replacementArray as &$v) {
+            foreach ($this->replacementArray as $v) {
                 $repeats *= $v->getCount();
             }
             return $repeats;
@@ -149,40 +148,34 @@ class Part
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getCount()
+    public function getCount(): int
     {
         $cnt = 1;
-        if (is_array($this->template) || ($this->template instanceof Countable)) {
+        if (is_array($this->template)) {
             $cnt = count($this->template);
         }
 
         return intval($cnt * $this->getReplacementCount());
     }
 
-    /**
-     *
-     */
-    protected function next()
+    protected function next(): void
     {
     }
 
     /**
      * Получить текущий шаблон, по которому будет сгенерен текст
-     * @return string
      */
-    protected function getCurrentTemplate()
+    protected function getCurrentTemplate(): string
     {
         return $this->template;
     }
 
     /**
      * @param null $seed
+     *
      * @return mixed
-     */
-    public function getRandomTemplate($seed = null)
+     * @noinspection DuplicatedCode*/
+    public function getRandomTemplate($seed = null): mixed
     {
         if (is_null($this->template)) {
             return '';
@@ -204,9 +197,9 @@ class Part
 
     /**
      * Получить массив замен для шаблона
-     * @return array|Part[]
+     * @return array<Part>
      */
-    protected function getReplacementArray()
+    protected function getReplacementArray(): array
     {
         return $this->replacementArray;
     }
@@ -217,7 +210,7 @@ class Part
      * @param array $options
      * @return $this
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): Part
     {
         foreach ($options as $k => $v) {
             $this->setOption($k, $v);
@@ -230,22 +223,24 @@ class Part
      *
      * @param string $name
      * @param mixed $value
+     *
      * @return $this
      */
-    public function setOption($name, $value)
+    public function setOption(string $name, mixed $value): Part
     {
-        $this->options[(string)$name] = $value;
+        $this->options[$name] = $value;
         return $this;
     }
 
     /**
      * Get option value be key
      *
-     * @param string $key
-     * @param mixed $default Default value if key don't exists
+     * @param string|null $key
+     * @param mixed|null $default Default value if key don't exists
+     *
      * @return array|null
      */
-    public function getOption($key = null, $default = null)
+    public function getOption(string $key = null, mixed $default = null): ?array
     {
         if (is_null($key)) {
             return $this->options;
@@ -261,23 +256,17 @@ class Part
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * Factorial
-     *
-     * @param $x
-     * @return int
-     */
-    protected function factorial($x)
+    protected function factorial(int $x): int
     {
         if ($x === 0) {
             return 1;
         } else {
-            return $x*$this->factorial($x-1);
+            return intval($x*$this->factorial($x-1));
         }
     }
 }

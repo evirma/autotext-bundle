@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\TextGenerator;
 
 class TextGenerator
 {
-    /** @var  array */
-    protected static $replaceList;
+    protected static array $replaceList;
 
     /**
      * Factory method
@@ -15,7 +16,7 @@ class TextGenerator
      *
      * @return OrPart|Part|XorPart
      */
-    public static function factory($template, array $options = array())
+    public static function factory($template, array $options = array()): Part|OrPart|XorPart
     {
         $template = (string)$template;
 
@@ -23,7 +24,8 @@ class TextGenerator
             $template = str_replace(array_keys($replaceList), array_values($replaceList), $template);
         }
 
-        if (preg_match_all('#(?:\[|\{)((?:(?:[^\[\{\]\}]+)|(?R))*)(?:\]|\})#', $template, $m) > 1) {
+        /** @noinspection RegExpRedundantEscape */
+        if (preg_match_all('#[\[{]((?:[^\[{\]}]+|(?R))*)[\]}]#', $template) > 1) {
             return new Part($template, $options);
         }
 
@@ -43,20 +45,15 @@ class TextGenerator
     /**
      * @return array
      */
-    public static function getReplaceList()
+    public static function getReplaceList(): array
     {
-        return (array)self::$replaceList;
+        return self::$replaceList;
     }
 
-    /**
-     * Add list of replaces
-     *
-     * @param $array
-     */
-    public static function addReplaceList($array)
+    public static function addReplaceList($array): void
     {
         if (is_array($array)) {
-            foreach ($array as $k => &$v) {
+            foreach ($array as $k => $v) {
                 self::addReplace($k, $v);
             }
         }
@@ -68,7 +65,7 @@ class TextGenerator
      * @param $name
      * @param $value
      */
-    public static function addReplace($name, $value)
+    public static function addReplace($name, $value): void
     {
         self::$replaceList['%' . trim($name, '%') . '%'] = (string)$value;
     }

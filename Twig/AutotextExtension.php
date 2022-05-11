@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Evirma\Bundle\AutotextBundle\Twig;
 
 use Evirma\Bundle\AutotextBundle\Autotext;
+use JetBrains\PhpStorm\ArrayShape;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class AutotextExtension extends AbstractExtension
 {
+    #[ArrayShape(['autotext' => "\Twig\TwigFilter"])]
     public function getFilters(): array
     {
         return [

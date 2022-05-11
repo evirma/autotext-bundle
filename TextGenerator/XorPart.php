@@ -1,20 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\TextGenerator;
 
 class XorPart extends Part
 {
     /**
-     * Массив шаблонов для генерации
-     * @var array
-     */
-    protected $template;
-
-    /**
      * Текущий ключ массива шаблонов
-     * @var int
      */
-    private $currentTemplateKey = 0;
+    private int $currentTemplateKey = 0;
 
     public function __construct($template, array $options = array())
     {
@@ -29,7 +24,7 @@ class XorPart extends Part
     /**
      * Смещает текущий ключ массива
      */
-    public function next()
+    public function next(): void
     {
         $this->currentTemplateKey++;
         if (!isset($this->template[$this->currentTemplateKey])) {
@@ -42,16 +37,15 @@ class XorPart extends Part
      *
      * @return string
      */
-    public function getCurrentTemplate()
+    public function getCurrentTemplate(): string
     {
         return $this->template[$this->currentTemplateKey];
     }
 
     /**
-     * @param null $seed
-     * @return mixed
+     * @noinspection DuplicatedCode
      */
-    public function getRandomTemplate($seed = null)
+    public function getRandomTemplate($seed = null): mixed
     {
         $templatesCount = count($this->template);
         $templateKey = 0;
@@ -65,7 +59,7 @@ class XorPart extends Part
     /**
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return count($this->template) + $this->getReplacementCount() - 1;
     }

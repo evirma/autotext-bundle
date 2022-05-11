@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evirma\Bundle\AutotextBundle\TextGenerator;
 
 use Evirma\Bundle\AutotextBundle\Permutation\Exception;
@@ -9,27 +11,20 @@ class OrPart extends XorPart
 {
     /**
      * Word delimiter
-     *
-     * @var string
      */
-    private $delimiter = ' ';
+    private string $delimiter = ' ';
 
     /**
      * Последовательность, в которой будут следовать фразы шаблона при генерации
-     * @var array
      */
-    private $currentTemplateKeySequence;
+    private array $currentTemplateKeySequence;
 
     /**
      * Массив последовательностей слов, из которых будут формироваться фразы
-     * @var array
      */
-    private $sequenceArray = array();
+    private array $sequenceArray = [];
 
-    /**
-     * @var Permutation
-     */
-    private $permutation;
+    private Permutation $permutation;
 
     public function __construct($template, array $options = array())
     {
@@ -48,7 +43,7 @@ class OrPart extends XorPart
 
         try {
             $this->permutation = new Permutation($itemsCount);
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         $firstSequence     = $this->permutation->current();
@@ -61,26 +56,21 @@ class OrPart extends XorPart
      *
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         $repeats = $this->getReplacementCount();
         return $this->getTemplateCount() * $repeats;
     }
 
-    /**
-     * @return int
-     */
-    public function getTemplateCount()
+    public function getTemplateCount(): int
     {
         return $this->factorial(count(reset($this->sequenceArray)));
     }
 
     /**
      * Смещает текущую последрвательность ключей массива шаблона на следующую
-     *
-     * @return array
      */
-    public function next()
+    public function next(): void
     {
         $key = implode('', $this->currentTemplateKeySequence);
         if (!isset($this->sequenceArray[$key]) || !($nextSequence = $this->sequenceArray[$key])) {
@@ -88,11 +78,10 @@ class OrPart extends XorPart
             $this->sequenceArray[$key] = $nextSequence;
         }
         $this->currentTemplateKeySequence = $nextSequence;
-        return $nextSequence;
     }
 
 
-    public function getCurrentTemplate()
+    public function getCurrentTemplate(): string
     {
         $templateKeySequence = $this->currentTemplateKeySequence;
 
@@ -105,11 +94,7 @@ class OrPart extends XorPart
         return implode($this->delimiter, $templateKeySequence);
     }
 
-    /**
-     * @param null $seed
-     * @return string
-     */
-    public function getRandomTemplate($seed = null)
+    public function getRandomTemplate($seed = null): string
     {
         if ($seed) mt_srand(abs(crc32($seed.'_orPartRandom')));
         $templates = $this->template;
@@ -118,7 +103,7 @@ class OrPart extends XorPart
         array_multisort($order, $templates);
 
         $result = [];
-        $templateArray = $this->template;
+        $templateArray = $templates;
         for ($i = 0, $count = count($this->currentTemplateKeySequence); $i < $count; $i++) {
             $templateKey             = $this->currentTemplateKeySequence[$i];
             $result[$i] = $templateArray[$templateKey];
