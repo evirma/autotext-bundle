@@ -6,7 +6,7 @@ namespace Evirma\Bundle\AutotextBundle\TextGenerator;
 
 class TextGenerator
 {
-    protected static array $replaceList;
+    protected static array $replaceList = [];
 
     /**
      * Factory method

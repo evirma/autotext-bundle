@@ -23,9 +23,9 @@ class Part
 
     /**
      * Массив замен из управляющих конструкций (перестановок и переборов)
-     * @var array|Part[]
+     * @var array<Part>
      */
-    protected array $replacementArray;
+    protected array $replacementArray = [];
 
     private array $options = [
         self::OPTION_STRIP_WHITE_SPACE => true,
