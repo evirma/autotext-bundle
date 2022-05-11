@@ -166,12 +166,7 @@ class Part
         return $this->template;
     }
 
-    /**
-     * @param null $seed
-     *
-     * @return mixed
-     * @noinspection DuplicatedCode*/
-    public function getRandomTemplate($seed = null): mixed
+    public function getRandomTemplate(string $seed = null): mixed
     {
         if (is_null($this->template)) {
             return '';
