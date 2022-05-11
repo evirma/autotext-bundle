@@ -20,16 +20,18 @@ class Autotext
 
     public static function replaceVars(string $text, array $vars = []): string
     {
-        if (empty($text) || empty($vars) || (strpos($text, '%') === false)) {
+        if (empty($text) || empty($vars) || (!str_contains($text, '%'))) {
             return trim($text);
         }
 
         $replaces = [];
-        foreach ($vars as $k => &$v) {
+        foreach ($vars as $k => $v) {
             $replaces['%'.trim($k, ' %').'%'] = $v;
         }
 
         $text = strtr($text, $replaces);
+
+        /** @noinspection PhpRegExpRedundantModifierInspection */
         $text = preg_replace('#%\s*\w+\s*%#si', '', $text);
 
         return trim($text);

@@ -67,7 +67,7 @@ class Part
 
         $template = preg_replace_callback('#[\[{]((?:[^\[{\]}]+|(?R))*)[}\]]#', function ($match) use (&$replacementArray) {
             $key                    = '%0000' . count($replacementArray) . '%';
-            $replacementArray[$key] = TextGenerator::factory($match[0], $this->getOptions());
+            $replacementArray[$key] = TextGenerator::factory((string)$match[0], $this->getOptions());
             return $key;
         }, $template);
 
@@ -106,11 +106,7 @@ class Part
         return $template;
     }
 
-    /**
-     * @param null $seed
-     * @return mixed
-     */
-    public function generateRandom($seed = null): mixed
+    public function generateRandom(string $seed = null): mixed
     {
         $template         = $this->getRandomTemplate($seed);
         $replacementArray = $this->getReplacementArray();
@@ -188,7 +184,7 @@ class Part
         $templatesCount = count($this->template);
         $templateKey = 0;
         if ($templatesCount > 1) {
-            if ($seed) mt_srand(abs(crc32($seed.'_XorPartRandom')));
+            if ($seed) mt_srand(abs(crc32($seed.'_Part')));
             $templateKey = mt_rand(0, count($this->template) - 1);
         }
         return $this->template[$templateKey];

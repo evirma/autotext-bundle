@@ -21,9 +21,6 @@ class XorPart extends Part
         $this->replacementArray = $template['replacement_array'];
     }
 
-    /**
-     * Смещает текущий ключ массива
-     */
     public function next(): void
     {
         $this->currentTemplateKey++;
@@ -32,11 +29,6 @@ class XorPart extends Part
         }
     }
 
-    /**
-     * Returns current template value
-     *
-     * @return string
-     */
     public function getCurrentTemplate(): string
     {
         return $this->template[$this->currentTemplateKey];
@@ -45,7 +37,7 @@ class XorPart extends Part
     /**
      * @noinspection DuplicatedCode
      */
-    public function getRandomTemplate($seed = null): mixed
+    public function getRandomTemplate(string $seed = null): mixed
     {
         $templatesCount = count($this->template);
         $templateKey = 0;
