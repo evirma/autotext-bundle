@@ -9,11 +9,11 @@ use Evirma\Bundle\AutotextBundle\TextGenerator\TextGenerator;
 
 class Autotext
 {
-    public static function autotext(string $text, string $seed = null, array $vars = []): string
+    public static function autotext(string $text, string|int|float $seed = null, array $vars = []): string
     {
         $textGeneratorOptions = [Part::OPTION_GENERATE_RANDOM => $seed];
         $textGenerator = TextGenerator::factory($text, $textGeneratorOptions);
-        $text = $seed ? $textGenerator->generateRandom($seed) : $textGenerator->generate();
+        $text = $seed ? $textGenerator->generateRandom((string)$seed) : $textGenerator->generate();
 
         return self::replaceVars($text, $vars);
     }
