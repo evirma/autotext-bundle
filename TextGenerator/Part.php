@@ -8,9 +8,9 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Part
 {
-    const string OPTION_STRIP_WHITE_SPACE   = 'strip_white_space';
+    const string OPTION_STRIP_WHITE_SPACE = 'strip_white_space';
     const string OPTION_FILTER_EMPTY_VALUES = 'filter_empty_values';
-    const string OPTION_REMOVE_DUPLICATES   = 'remove_duplicates';
+    const string OPTION_REMOVE_DUPLICATES = 'remove_duplicates';
     const string OPTION_GENERATE_RANDOM = 'generate_random';
     const string OPTION_GENERATE_HASH = 'generate_hash';
 
@@ -36,13 +36,13 @@ class Part
 
     /**
      * @param string $template - шаблон, по которому будет генерироваться текст
-     * @param array  $options
+     * @param array $options
      */
     public function __construct(string $template, array $options = array())
     {
         $this->setOptions($options);
-        $template               = $this->parseTemplate($template);
-        $this->template         = $template['template'];
+        $template = $this->parseTemplate($template);
+        $this->template = $template['template'];
         $this->replacementArray = $template['replacement_array'];
     }
 
@@ -65,13 +65,13 @@ class Part
         $replacementArray = array();
 
         $template = preg_replace_callback('#[\[{]((?:[^\[{\]}]+|(?R))*)[}\]]#', function ($match) use (&$replacementArray) {
-            $key                    = '%0000' . count($replacementArray) . '%';
+            $key = '%0000' . count($replacementArray) . '%';
             $replacementArray[$key] = TextGenerator::factory((string)$match[0], $this->getOptions());
             return $key;
         }, $template);
 
         return array(
-            'template'          => $template,
+            'template' => $template,
             'replacement_array' => $replacementArray
         );
     }
@@ -82,17 +82,17 @@ class Part
      */
     public function generate(): string
     {
-        $template         = $this->getCurrentTemplate();
+        $template = $this->getCurrentTemplate();
         $replacementArray = $this->getReplacementArray();
 
         $replacementArrayTmp = array();
-        $searchArray         = array();
+        $searchArray = array();
         /**
          * @var mixed $key
          * @var array|Part[] $value
          */
         foreach ($replacementArray as $key => $value) {
-            $searchArray[]         = $key;
+            $searchArray[] = $key;
             $replacementArrayTmp[] = $value->generate();
         }
         $replacementArray = $replacementArrayTmp;
@@ -107,17 +107,17 @@ class Part
 
     public function generateRandom(string $seed = null): mixed
     {
-        $template         = $this->getRandomTemplate($seed);
+        $template = $this->getRandomTemplate($seed);
         $replacementArray = $this->getReplacementArray();
 
         $replacementArrayTmp = array();
-        $searchArray         = array();
+        $searchArray = array();
         /**
          * @var mixed $key
          * @var array|Part[] $value
          */
         foreach ($replacementArray as $key => $value) {
-            $searchArray[]         = $key;
+            $searchArray[] = $key;
             $replacementArrayTmp[] = $value->generateRandom($seed);
         }
         $replacementArray = $replacementArrayTmp;
@@ -162,7 +162,19 @@ class Part
      */
     protected function getCurrentTemplate(): string
     {
-        return $this->template;
+        if (is_null($this->template)) {
+            return '';
+        }
+
+        if (is_string($this->template)) {
+            return $this->template;
+        }
+
+        if (is_array($this->template)) {
+            return implode(' ', $this->template);
+        }
+
+        return '';
     }
 
     public function getRandomTemplate(string $seed = null): mixed
@@ -178,7 +190,7 @@ class Part
         $templatesCount = count($this->template);
         $templateKey = 0;
         if ($templatesCount > 1) {
-            if ($seed) mt_srand(abs(crc32($seed.'_Part')));
+            if ($seed) mt_srand(abs(crc32($seed . '_Part')));
             $templateKey = mt_rand(0, count($this->template) - 1);
         }
         return $this->template[$templateKey];
@@ -256,7 +268,7 @@ class Part
         if ($x === 0) {
             return 1;
         } else {
-            return intval($x*$this->factorial($x-1));
+            return intval($x * $this->factorial($x - 1));
         }
     }
 }
