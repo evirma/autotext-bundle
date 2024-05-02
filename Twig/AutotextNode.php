@@ -34,27 +34,23 @@ class AutotextNode extends Node
 
         $compiler
             ->addDebugInfo($this)
-            ->write('ob_start();'.PHP_EOL)
-            //->subcompile($this->getNode('body'))
-            ->subcompile($node)
-            ->write('echo $tmp;'.PHP_EOL)
-            ->write('$body = ob_get_clean();'.PHP_EOL);
+            ->subcompile($node);
 
         if ($this->hasNode('id') && $this->getNode('id')) {
-            $compiler->raw('$id = ')->subcompile($this->getNode('id'))->raw(';'.PHP_EOL);
+            $compiler->raw('$id = ')->subcompile($this->getNode('id'))->raw(';');
         } else {
-            $compiler->raw('$id = null;'.PHP_EOL);
+            $compiler->raw('$id = null;');
         }
 
         if ($this->hasNode('vars') && $this->getNode('vars') instanceof ArrayExpression) {
             $compiler
                 ->raw('$vars = ')
                 ->subcompile($this->getNode('vars'))
-                ->raw(';'.PHP_EOL);
+                ->raw(';');
         } else {
-            $compiler->raw('$vars = [];'.PHP_EOL);
+            $compiler->raw('$vars = [];');
         }
 
-        $compiler->write('echo $this->env->getExtension(\'Evirma\\Bundle\\AutotextBundle\\Twig\\AutotextExtension\')->autotext($body, $id, $vars);'.PHP_EOL);
+        $compiler->write('echo $this->env->getExtension(\'Evirma\\Bundle\\AutotextBundle\\Twig\\AutotextExtension\')->autotext($tmp, $id, $vars);'.PHP_EOL);
     }
 }
