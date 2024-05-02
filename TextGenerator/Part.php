@@ -8,12 +8,11 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Part
 {
-    const OPTION_STRIP_WHITE_SPACE   = 'strip_white_space';
-    const OPTION_FILTER_EMPTY_VALUES = 'filter_empty_values';
-    const OPTION_REMOVE_DUPLICATES   = 'remove_duplicates';
-
-    const OPTION_GENERATE_RANDOM = 'generate_random';
-    const OPTION_GENERATE_HASH = 'generate_hash';
+    const string OPTION_STRIP_WHITE_SPACE   = 'strip_white_space';
+    const string OPTION_FILTER_EMPTY_VALUES = 'filter_empty_values';
+    const string OPTION_REMOVE_DUPLICATES   = 'remove_duplicates';
+    const string OPTION_GENERATE_RANDOM = 'generate_random';
+    const string OPTION_GENERATE_HASH = 'generate_hash';
 
     /**
      * Шаблон для генерации

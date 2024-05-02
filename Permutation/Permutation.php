@@ -43,16 +43,16 @@ class Permutation
         $result = array();
 
         for ($i = count($items) - 1; $i >= 0; --$i) {
-            $newitems = $items;
-            $newperms = $perms;
+            $newItems = $items;
+            $newPerms = $perms;
 
-            [$foo] = array_splice($newitems, $i, 1);
-            array_unshift($newperms, $foo);
+            [$foo] = array_splice($newItems, $i, 1);
+            array_unshift($newPerms, $foo);
 
-            if (empty($newitems)) {
-                $result[] = $newperms;
+            if (empty($newItems)) {
+                $result[] = $newPerms;
             } else {
-                $innerResult = $this->_permuteArray($newitems, $newperms);
+                $innerResult = $this->_permuteArray($newItems, $newPerms);
                 foreach ($innerResult as $r) {
                     $result[] = $r;
                 }

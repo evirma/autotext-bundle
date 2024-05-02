@@ -34,7 +34,7 @@ class XorPart extends Part
         return $this->template[$this->currentTemplateKey];
     }
 
-    public function getRandomTemplate(string $seed = null): mixed
+    public function getRandomTemplate(string $seed = null): string
     {
         $templatesCount = count($this->template);
         $templateKey = 0;

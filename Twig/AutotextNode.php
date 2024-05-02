@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Evirma\Bundle\AutotextBundle\Twig;
 
 use Twig\Compiler;
+use Twig\Node\CaptureNode;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Node;
@@ -28,10 +29,15 @@ class AutotextNode extends Node
 
     public function compile(Compiler $compiler): void
     {
+        $node = new CaptureNode($this->getNode('body'), $this->getNode('body')->lineno, $this->getNode('body')->tag);
+        $node->setAttribute('with_blocks', true);
+
         $compiler
             ->addDebugInfo($this)
             ->write('ob_start();'.PHP_EOL)
-            ->subcompile($this->getNode('body'))
+            //->subcompile($this->getNode('body'))
+            ->subcompile($node)
+            ->write('echo $tmp;'.PHP_EOL)
             ->write('$body = ob_get_clean();'.PHP_EOL);
 
         if ($this->hasNode('id') && $this->getNode('id')) {

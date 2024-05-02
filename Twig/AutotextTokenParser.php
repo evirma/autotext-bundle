@@ -33,13 +33,13 @@ class AutotextTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        $body = $parser->subparse(array($this, 'decideMarkdownEnd'), true);
+        $body = $parser->subparse(array($this, 'decideAutotextEnd'), true);
         $stream->expect(Token::BLOCK_END_TYPE);
 
         return new AutotextNode($body, $id, $vars, $lineno, $this->getTag());
     }
 
-    public function decideMarkdownEnd(Token $token): bool
+    public function decideAutotextEnd(Token $token): bool
     {
         return ($token->test('autotextend') || $token->test('endautotext'));
     }
