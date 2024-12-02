@@ -9,7 +9,7 @@ use Evirma\Bundle\AutotextBundle\TextGenerator\TextGenerator;
 
 class Autotext
 {
-    public static function autotext(string $text, string|int|float $seed = null, array $vars = []): string
+    public static function autotext(string $text, null|string|int|float $seed = null, array $vars = []): string
     {
         $textGeneratorOptions = [Part::OPTION_GENERATE_RANDOM => $seed];
         $textGenerator = TextGenerator::factory($text, $textGeneratorOptions);
