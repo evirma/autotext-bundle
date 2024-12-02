@@ -68,7 +68,7 @@ class OrPart extends XorPart
     }
 
     /**
-     * Смещает текущую последрвательность ключей массива шаблона на следующую
+     * Смещает текущую последовательность ключей массива шаблона на следующую
      */
     public function next(): void
     {
@@ -94,7 +94,7 @@ class OrPart extends XorPart
         return implode($this->delimiter, $templateKeySequence);
     }
 
-    public function getRandomTemplate(string $seed = null): string
+    public function getRandomTemplate(?string $seed = null): string
     {
         if ($seed) mt_srand(abs(crc32($seed.'_orPartRandom')));
         $templates = $this->template;

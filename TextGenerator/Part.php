@@ -105,7 +105,7 @@ class Part
         return $template;
     }
 
-    public function generateRandom(string $seed = null): mixed
+    public function generateRandom(?string $seed = null): mixed
     {
         $template = $this->getRandomTemplate($seed);
         $replacementArray = $this->getReplacementArray();
@@ -177,7 +177,7 @@ class Part
         return '';
     }
 
-    public function getRandomTemplate(string $seed = null): mixed
+    public function getRandomTemplate(?string $seed = null): mixed
     {
         if (is_null($this->template)) {
             return '';
@@ -242,7 +242,7 @@ class Part
      *
      * @return array|null
      */
-    public function getOption(string $key = null, mixed $default = null): ?array
+    public function getOption(?string $key = null, mixed $default = null): ?array
     {
         if (is_null($key)) {
             return $this->options;

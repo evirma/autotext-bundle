@@ -27,7 +27,7 @@ class AutotextExtension extends AbstractExtension
         ];
     }
 
-    public function autotext(string $text, string $id = null, array $vars = []): string
+    public function autotext(string $text, ?string $id = null, array $vars = []): string
     {
         return Autotext::autotext($text, $id, $vars);
     }

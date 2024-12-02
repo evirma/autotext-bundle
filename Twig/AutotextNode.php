@@ -12,7 +12,7 @@ use Twig\Node\Node;
 
 class AutotextNode extends Node
 {
-    public function __construct(Node $body, AbstractExpression $id = null, ArrayExpression $vars = null, $line = 0, $tag = null)
+    public function __construct(Node $body, ?AbstractExpression $id = null, ?ArrayExpression $vars = null, $line = 0, $tag = null)
     {
         $nodes = array('body' => $body);
 
